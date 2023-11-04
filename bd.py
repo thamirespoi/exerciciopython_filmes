@@ -28,15 +28,31 @@ class BD:
         """)
 
     def inserir(self, tabela, valores):
-        sql = f"INSERT INTO {tabela}"
+        colunas = ', '.join(valores.keys())
+        placeholders = ', '.join(['?'] * len(valores))
         
-        for chave, valor in valores.items():
-            sql += f"{chave},"
+        # Cria a sql do banco de dados
+        sql = f"INSERT INTO {tabela} ({colunas}) VALUES ({placeholders})"
 
-            sql += ')'
+        # Executa a sql no banco de dados
+        self.cursos.execute(sql, tuple(valores.values()))
 
-            for chave, valor in valores.items():
-                sql += f"{valor},"
+        # Confirma as alterações do banco
+        self.banco.commit()
 
-            print (', '.join(valores.keys()))
-            print (', '.join(['?'] * len(valores)))
+        # Verifica se deu certo o armazenamento 
+        if self.cursos.lastrowid:
+            print(f"{tabela} salvo com sucesso!")
+            return True
+        else:
+            print("Erro ao cadastrar dados!")
+            return False
+        
+    def buscaDados(self, tabela, campos = '*'):
+        sql = f"SELECT {campos} FROM {tabela}"
+        self.cursor.execute(sql)
+
+        # Pega todos os dados retornados pelo banco 
+        # e guarda na variavel dados
+        dados = self.cursos.fetchall()
+        return dados
