@@ -12,4 +12,11 @@ while opcao != 0:
     opcao = interface.selecionaOpcao([1, 2, 0])
     interface.limpaTela()
 
-    banco = BD("catalogoFilmes.db")
+    #Tela de cadastro de filmes
+    if opcao == 1:
+        interface.mostraCadastroFilmes()
+
+    
+    #Tela de lista de filmes
+    if opcao == 2:
+        pass
