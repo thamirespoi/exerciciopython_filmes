@@ -30,18 +30,18 @@ class BD:
     def inserir(self, tabela, valores):
         colunas = ', '.join(valores.keys())
         placeholders = ', '.join(['?'] * len(valores))
-        
+
         # Cria a sql do banco de dados
         sql = f"INSERT INTO {tabela} ({colunas}) VALUES ({placeholders})"
 
         # Executa a sql no banco de dados
-        self.cursos.execute(sql, tuple(valores.values()))
+        self.cursor.execute(sql, tuple(valores.values()))
 
         # Confirma as alterações do banco
         self.banco.commit()
 
-        # Verifica se deu certo o armazenamento 
-        if self.cursos.lastrowid:
+        # Verifica se deu certo o armazenamento
+        if self.cursor.lastrowid:
             print(f"{tabela} salvo com sucesso!")
             return True
         else:
@@ -52,7 +52,7 @@ class BD:
         sql = f"SELECT {campos} FROM {tabela}"
         self.cursor.execute(sql)
 
-        # Pega todos os dados retornados pelo banco 
+        # Pega todos os dados retornados pelo banco
         # e guarda na variavel dados
-        dados = self.cursos.fetchall()
+        dados = self.cursor.fetchall()
         return dados
