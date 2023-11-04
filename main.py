@@ -20,4 +20,7 @@ while opcao != 0:
 
     # Tela de lista de filmes
     elif opcao == 2:
-        pass
+        #Mostrar tela para lista de filmes
+        interface.mostrarListaFilmes()
+        opcao = ""
+        interface.limpaTela()
